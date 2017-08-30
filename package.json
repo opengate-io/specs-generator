@@ -33,7 +33,7 @@
         "tape": "^4"
     },
     "scripts": {
-        "test": "npm run cover && cd specs-editor && npm install && npm run test",
+        "test": "npm run cover && cd specs-editor && npm install && npm run test ",
         "cover": "istanbul cover tape -- 'tests/**/*.js'",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
         "lint": "eslint .",
