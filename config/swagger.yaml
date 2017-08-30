@@ -1,0 +1,68 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: specs-generator
+host: 'localhost:8000'
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /generate:
+    x-swagger-router-controller: generators
+    post:
+      description: Generate 'API' specs from CURL format.
+      operationId: generateFromCURL
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GenerateRequest'
+      responses:
+        default:
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '201':
+          description: Created
+  /cors:
+    x-swagger-router-controller: generators
+    get:
+      description: Get 'API' resource from browser request (CORS passthrough).
+      operationId: getCORS
+      parameters:
+        - name: url
+          in: query
+          required: true
+          type: string
+      responses:
+        default:
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '200':
+          description: Success
+  /swagger:
+    x-swagger-pipe: swagger_raw
+definitions:
+  GenerateRequest:
+    required:
+      - type
+    properties:
+      type:
+        type: string
+      data:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
