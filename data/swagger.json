@@ -1,7 +1,6 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is a generated API request.",
     "version": "1.0.0",
     "title": "OpenGate IO Generator"
   },

@@ -41,7 +41,7 @@ export default class Topbar extends React.Component {
   }
 
   // Menu actions: import From CURL request
-  importFromCURL = () => {
+  specsFromCURL = () => {
     let curl = prompt("Enter the CURL to import from service call:")
     if (curl) {
       let params = {
@@ -52,7 +52,7 @@ export default class Topbar extends React.Component {
       for (const prop in params) {
         searchParams.set(prop, params[prop])
       }
-      fetch("http://localhost:8000/generate", {
+      fetch("/generate", {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -197,7 +197,7 @@ export default class Topbar extends React.Component {
               <span className="topbar-logo__title">OpenGate IO Converter</span>
             </Link>
             <DropdownMenu {...makeMenuOptions("File") }>
-              <li><button type="button" onClick={this.importFromCURL}>Import CURL</button></li>
+              <li><button type="button" onClick={this.specsFromCURL}>Import CURL</button></li>
               <li><button type="button" onClick={this.showModal}>Import File</button></li>
               <li role="separator"></li>
               <li><button type="button" onClick={this.saveAsYaml}>Download YAML</button></li>

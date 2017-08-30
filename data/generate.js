@@ -13,8 +13,6 @@ function processResponse(curlRequest, info) {
     swaggerTemplate.basePath = urlObject.pathname;
     swaggerTemplate.schemes = [urlObject.protocol.replace(":", "")];
     swaggerTemplate.paths["/"][curlRequest.method.toLowerCase()] = {
-        "summary": "Add a new object to the resource",
-        "description": "",
         "responses": {
             "200": {
                 "description": "Success",

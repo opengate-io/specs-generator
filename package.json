@@ -37,6 +37,7 @@
         "cover": "istanbul cover tape -- 'tests/**/*.js'",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
         "lint": "eslint .",
+        "build": "cd specs-editor && npm install && npm run build && mv dist ../public/ && mv index.html ../public/",
         "regenerate": "yo swaggerize:test --framework express --apiPath './config/swagger.yaml'"
     },
     "generator-swaggerize": {
