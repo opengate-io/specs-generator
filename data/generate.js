@@ -1,12 +1,13 @@
 "use strict";
 var parseCurl = require("parse-curl");
 var generateSchema = require("generate-schema");
+var converter = require("swagger2openapi");
 var queryString = require("query-string");
 var request = require("request");
 var Url = require("url");
 var swaggerTemplate = require("./swagger.json");
 
-function processResponse(curlRequest, info) {
+function processResponse(curlRequest, info, callback) {
     let urlObject = Url.parse(curlRequest.url);
     let responseSchema = generateSchema.json("ResponseObject", JSON.parse(info));
     swaggerTemplate.host = urlObject.host;
@@ -55,7 +56,10 @@ function processResponse(curlRequest, info) {
     }
     delete responseSchema.$schema;
     swaggerTemplate.definitions["ResponseObject"] = responseSchema;
-    return JSON.stringify(swaggerTemplate);
+    converter.convertObj(swaggerTemplate, {}, function (err, options) {
+        // options.openapi contains the converted definition
+        callback(options.openapi);
+    });
 }
 
 function specsFromCURL(req, res, callback) {
@@ -70,8 +74,9 @@ function specsFromCURL(req, res, callback) {
         };
         request(options, function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                let dataResponse = processResponse(curlRequest, body);
-                callback(null, dataResponse);
+                processResponse(curlRequest, body, function(openapiSpecs) {
+                    callback(null, openapiSpecs);
+                });
             } else {
                 callback(error, null);
             }
