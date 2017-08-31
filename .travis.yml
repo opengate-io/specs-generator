@@ -10,7 +10,7 @@ cache:
   - node_modules
 after_success: npm run coveralls
 before_deploy:
-- rm -rf specs-editor && npm pack
+- npm run build && rm -rf specs-editor && npm pack
 deploy:
 - provider: releases
   api_key:
