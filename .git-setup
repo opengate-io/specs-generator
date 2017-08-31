@@ -1,0 +1,5 @@
+git secrets --add 'aws_access_key_id\s*=\s*.+'
+git secrets --add 'aws_secret_access_key\s*=\s*.+'
+git secrets --add 'AWS_ACCESS_KEY_ID\s*=\s*.+'
+git secrets --add 'AWS_SECRET_ACCESS_KEY\s*=\s*.+'
+git secrets --add 'AWS_SESSION_TOKEN\s*=\s*.+'
