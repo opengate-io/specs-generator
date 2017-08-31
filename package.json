@@ -39,6 +39,7 @@
         "cover": "istanbul cover tape -- 'tests/**/*.js'",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
         "lint": "eslint .",
+        "tag": "mversion patch -mn 'Tag new version for a release commit'",
         "build": "cd specs-editor && npm install && npm run build && cp -rf dist ../public/ && cp -f index.html ../public/",
         "regenerate": "yo swaggerize:test --framework express --apiPath './config/swagger.yaml'"
     },
