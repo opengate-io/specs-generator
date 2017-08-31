@@ -1,3 +1,5 @@
+git secrets --install
+git secrets --register-aws
 git secrets --add 'aws_access_key_id\s*=\s*.+'
 git secrets --add 'aws_secret_access_key\s*=\s*.+'
 git secrets --add 'AWS_ACCESS_KEY_ID\s*=\s*.+'
