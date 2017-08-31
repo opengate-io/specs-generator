@@ -42,7 +42,7 @@ export default class Topbar extends React.Component {
 
   // Menu actions: import From CURL request
   specsFromCURL = () => {
-    let curl = prompt("Enter the CURL to import from service call:")
+    let curl = this.refs.textInputCURL.value
     if (curl) {
       let params = {
         type: "CURL",
@@ -67,6 +67,7 @@ export default class Topbar extends React.Component {
           )
         })
     }
+    this.hideModalCURL()
   }
 
   importFromFile = () => {
@@ -76,7 +77,7 @@ export default class Topbar extends React.Component {
     fileReader.onload = fileLoadedEvent => {
       let textFromFileLoaded = fileLoadedEvent.target.result
       this.props.specActions.updateSpec(YAML.safeDump(YAML.safeLoad(textFromFileLoaded)))
-      this.hideModal()
+      this.hideModalFile()
     }
 
     fileReader.readAsText(fileToLoad, "UTF-8")
@@ -165,12 +166,20 @@ export default class Topbar extends React.Component {
 
   // Helpers
 
-  showModal = () => {
-    this.refs.modal.show()
+  showModalFile = () => {
+    this.refs.modalFile.show()
   }
 
-  hideModal = () => {
-    this.refs.modal.hide()
+  hideModalFile = () => {
+    this.refs.modalFile.hide()
+  }
+
+  showModalCURL = () => {
+    this.refs.modalCURL.show()
+  }
+
+  hideModalCURL = () => {
+    this.refs.modalCURL.hide()
   }
 
   render() {
@@ -197,8 +206,8 @@ export default class Topbar extends React.Component {
               <span className="topbar-logo__title">OpenGate IO Converter</span>
             </Link>
             <DropdownMenu {...makeMenuOptions("File") }>
-              <li><button type="button" onClick={this.specsFromCURL}>Import CURL</button></li>
-              <li><button type="button" onClick={this.showModal}>Import File</button></li>
+              <li><button type="button" onClick={this.showModalCURL}>Import CURL</button></li>
+              <li><button type="button" onClick={this.showModalFile}>Import File</button></li>
               <li role="separator"></li>
               <li><button type="button" onClick={this.saveAsYaml}>Download YAML</button></li>
               <li><button type="button" onClick={this.saveAsJson}>Download JSON</button></li>
@@ -210,14 +219,24 @@ export default class Topbar extends React.Component {
             </DropdownMenu>
           </div>
         </div>
-        <Modal className="swagger-ui modal" ref="modal">
+        <Modal className="swagger-ui modal" ref="modalFile">
           <div className="container">
             <h2>Upload file</h2>
             <input type="file" ref="fileLoadInput"></input>
           </div>
           <div className="right">
-            <button className="btn cancel" onClick={this.hideModal}>Cancel</button>
+            <button className="btn cancel" onClick={this.hideModalFile}>Cancel</button>
             <button className="btn" onClick={this.importFromFile}>Open file</button>
+          </div>
+        </Modal>
+        <Modal className="swagger-ui modal" ref="modalCURL">
+          <div className="container">
+            <h2>Import From CURL</h2>
+            <textarea type="input" ref="textInputCURL" style={{ "border": "1px solid #c3c3c3" }}></textarea>
+          </div>
+          <div className="right">
+            <button className="btn cancel" onClick={this.hideModalCURL}>Cancel</button>
+            <button className="btn" onClick={this.specsFromCURL}>Import</button>
           </div>
         </Modal>
       </div>
