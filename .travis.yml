@@ -1,6 +1,8 @@
 language: node_js
 node_js:
 - 8.4.0
+services:
+- docker
 notifications:
   email: false
 before_install:
@@ -11,13 +13,23 @@ cache:
 after_success: npm run coveralls
 before_deploy:
 - npm run build && rm -rf specs-editor && npm pack
+env:
+  matrix:
+  - DOCKER_IMAGE_NAME=opengate/specs-generator
+  global:
+  - secure: e1wQVABou5HG1fbMw34zUpLf7+He8/ze2gwqdggAAOe3pSm6ULx1j5GuSW05pyCZfhXiT6K7L00ap0N1V8BxHFGflLRDppciK2NDmSXGJm6k//6iRBpMyJGK0f8RXW9r43KC7jzrvjwczGY+5yXaEbD4eUw2ApPH7Mgvo3hhb2Kl6SCq4KicacVWJEQHJeA0uBQLRXzS8zT84Ku/DSHQvesIEuHyj+xN7AjwhIfVxPqDDFE45hdZpWjMBZrFpz/Uu6vokLAN3601OYWVP5jzKZ22sDw9PDlq+0ao08QGPSZe2mOUlbu2ytzmN7rbS9AHXmnPz4tyegf4LcmOceR02k7Q5Bvnz22sGIC5b+ugnK/ptx597CsejFK4+O9dE/sWrYLUu2mWWnhA/mxK9SXaTnE9j+v2rwMj+GsSm4JDdniteA6s8b+TSWY83P0nnfDetu53JYNlHebyaUkZ0/IDS/WTmxHJxYfzqRZazzpBQdR9yfshHB89Nt9DP18v6r+poANFZcZR+BKDJy6CkeDI1btLwfFbgw4uAcjNYRueSh18tp1RTnHK35LX7LqO+5rob/EW1892cuG43WZ+oPz+FQy/TqCubrwXGaTee19I1FnzQ/er2oKNz53Xu0GE3A+gi2pr6ZbUBJqEgJJS4PTynNwIReXvsmYUcLDT20/qPNw=
+  - secure: bWk6VUwqgmQebw1tWJW1QYXfnf6T0vjgSrnkmnr1fB8+/P7h0+b8rkYTlbPB5YyzXC1yyb0JniieySM6mW1LnGFuMLp2uQX4GKyK/6Ojq+0pELabug4YN0J0mtH4YnEnKyMEc4WeH0lhlDTwXoMdU0Bx96y79skYQE5M2G6M1xwxKR8y92Qhg0h89J2/Oec+z5BW2ZiFsCyYARcY5GiOojr281UFoOtk9vGBufYQxL9BK542/EjXS4bBePg0NGuHRzu5x2+y9OT7ypNAl7mcPmB0zLgORdKXgpLw4a5Ub2f2+TBsyEF/j/e2xmgtnabAtm559bCbXos+QE5ysl5uuaTA/mrME1zTPfw0LsQtpJvz9rBiPwQSF9hsa1oqdEQOftm453ZBUHBBORY+ejywY3hlWt1N1OSfDiWZqoTMaeCI4GxYDiYmOfIid4tfIjxcxqDsoxXfYDf993bX7uf0+9X7+BOeHIQaUPt5GhJluCnf4TosTvDEmEED0yhZzZD91HExiI+b5zyl6Tpv5sDbgYp3UCEK96VZW+eo1I81c6icSDB4iSvls/1ONzQNjyBcdrCliRI+VGoyLV6qN8BmwbQXf8NqcJz84GlzHP45b6QdbKboeG2WRCy5JRqQ8GvAq6XZ3qETKPFTydqD26TXUOm6AGXBGDDYTgdTZnCajeI=
 deploy:
 - provider: releases
   api_key:
-    secure: "GrulTJIEv3tvqNv0ALy6zU2Apq6WxcSUxxmK5DUFKLKYP00lDUABtyYrJILfP6mKL4ofXHGO71ylxuNeJCMjiR84wDjZVaFEL83pFvJl6fyGWe12IXbjy5iv8Q0ocx9oB51rfLiXsqmf2m96ZE8/iqLMikG1mtS3FPJ93L9o4zXyjXFI9NuwxYr43OGvxqQULp7K16oGiT9iQ9Ou9kvh0J5NkPrRcNnIl9K/sgae76nEdG7kx0T8+2++Zo9GhIiumFPojWz1drWqgDOeJPKpnclJBz9xMbF5pPcEIvpkiVm6AmfjMXeE7dZbaDqIlVqtq6Y8sfHJUT6BiHL5O7PW8LbEUQi98sMOwU+BLOz5TSjG/ieT6Thutwb71S22KCerIZ43DSAhB7+W+dZwHSSY+h8yeabCQAsKxFHGV0/RZWexQUQ2ZrZ0ccjhHO4pneiG3TgoUlbUTq6oAMZuWbinhUYAkxF3RX9yFF+RneCxV6UWZHiYh7suGpvGogR+X0wyC+Xb1CMRTAmaIwflTOUos7E3o4G1hbg26Fz4PUpkq8fbp+Uc5QqptYLxE+lUtQ310O7A3Rz6TPXPoqKPAAG24WONRsYXBYZcFJeMPkR0dEUCwgwjgFcFUrevBaxKF8tkQJehuvIgG5mG0b1i+3L3yj1NpgwsFiWR5Z6tQxsGoVM="
+    secure: GrulTJIEv3tvqNv0ALy6zU2Apq6WxcSUxxmK5DUFKLKYP00lDUABtyYrJILfP6mKL4ofXHGO71ylxuNeJCMjiR84wDjZVaFEL83pFvJl6fyGWe12IXbjy5iv8Q0ocx9oB51rfLiXsqmf2m96ZE8/iqLMikG1mtS3FPJ93L9o4zXyjXFI9NuwxYr43OGvxqQULp7K16oGiT9iQ9Ou9kvh0J5NkPrRcNnIl9K/sgae76nEdG7kx0T8+2++Zo9GhIiumFPojWz1drWqgDOeJPKpnclJBz9xMbF5pPcEIvpkiVm6AmfjMXeE7dZbaDqIlVqtq6Y8sfHJUT6BiHL5O7PW8LbEUQi98sMOwU+BLOz5TSjG/ieT6Thutwb71S22KCerIZ43DSAhB7+W+dZwHSSY+h8yeabCQAsKxFHGV0/RZWexQUQ2ZrZ0ccjhHO4pneiG3TgoUlbUTq6oAMZuWbinhUYAkxF3RX9yFF+RneCxV6UWZHiYh7suGpvGogR+X0wyC+Xb1CMRTAmaIwflTOUos7E3o4G1hbg26Fz4PUpkq8fbp+Uc5QqptYLxE+lUtQ310O7A3Rz6TPXPoqKPAAG24WONRsYXBYZcFJeMPkR0dEUCwgwjgFcFUrevBaxKF8tkQJehuvIgG5mG0b1i+3L3yj1NpgwsFiWR5Z6tQxsGoVM=
   file:
   - specs-generator-${TRAVIS_TAG}.tgz
   skip_cleanup: true
   on:
     repo: opengate-io/specs-generator
     tags: true
+after_deploy:
+- |-
+  if [ $DOCKER_HUB_USERNAME ]; then docker login --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD;
+  if [ ! -z "$TRAVIS_TAG" ]; then DOCKER_IMAGE_TAG=$TRAVIS_TAG; else DOCKER_IMAGE_TAG=latest; fi; docker build -t $DOCKER_IMAGE_NAME .; if [ ! -z "$TRAVIS_TAG" ]; then docker tag $DOCKER_IMAGE_NAME $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG; docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG; docker tag $DOCKER_IMAGE_NAME $DOCKER_IMAGE_NAME:latest; docker push $DOCKER_IMAGE_NAME:latest; else docker tag $DOCKER_IMAGE_NAME $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG; docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG; fi; fi;
