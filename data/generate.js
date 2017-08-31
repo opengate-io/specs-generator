@@ -11,9 +11,10 @@ function processResponse(curlRequest, info, callback) {
     let urlObject = Url.parse(curlRequest.url);
     let responseSchema = generateSchema.json("ResponseObject", JSON.parse(info));
     swaggerTemplate.host = urlObject.host;
-    swaggerTemplate.basePath = urlObject.pathname;
+    swaggerTemplate.basePath = urlObject.origin;
     swaggerTemplate.schemes = [urlObject.protocol.replace(":", "")];
-    swaggerTemplate.paths["/"][curlRequest.method.toLowerCase()] = {
+    swaggerTemplate.paths[urlObject.path] = {};
+    swaggerTemplate.paths[urlObject.path][curlRequest.method.toLowerCase()] = {
         "responses": {
             "200": {
                 "description": "Success",
@@ -23,14 +24,14 @@ function processResponse(curlRequest, info, callback) {
             }
         }
     };
-    if (!swaggerTemplate.paths["/"][curlRequest.method.toLowerCase()].parameters) {
-        swaggerTemplate.paths["/"][curlRequest.method.toLowerCase()].parameters = []
+    if (!swaggerTemplate.paths[urlObject.path][curlRequest.method.toLowerCase()].parameters) {
+        swaggerTemplate.paths[urlObject.path][curlRequest.method.toLowerCase()].parameters = [];
     }
     if (urlObject.search) {
         for (let [k, v] of Object.entries(queryString.parse(urlObject.search))) {
             let value = Number.parseInt(v);
             let isInteger = !isNaN(value);
-            swaggerTemplate.paths["/"][curlRequest.method.toLowerCase()].parameters.push({ in: "query",
+            swaggerTemplate.paths[urlObject.path][curlRequest.method.toLowerCase()].parameters.push({ in: "query",
                 name: k,
                 type: isInteger ? "integer" : "string",
                 default: isInteger ? value : v
@@ -38,14 +39,14 @@ function processResponse(curlRequest, info, callback) {
         }
     }
     if (curlRequest.header["Authorization"]) {
-        swaggerTemplate.paths["/"][curlRequest.method.toLowerCase()].parameters.push({ in: "header",
+        swaggerTemplate.paths[urlObject.path][curlRequest.method.toLowerCase()].parameters.push({ in: "header",
             name: "Authorization",
             type: "string",
             required: true
         });
     }
     if (curlRequest.body) {
-        swaggerTemplate.paths["/"][curlRequest.method.toLowerCase()].parameters.push({ in: "body",
+        swaggerTemplate.paths[urlObject.path][curlRequest.method.toLowerCase()].parameters.push({ in: "body",
             name: "body",
             schema: {
                 "$ref": "#/definitions/RequestObject"
