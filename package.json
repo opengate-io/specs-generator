@@ -31,6 +31,9 @@
         "supertest": "^1.2.0",
         "swagger-parser": "^3.4.1",
         "tape": "^4"
+        [default]
+        aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+        aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
     },
     "scripts": {
         "test": "npm run cover && cd specs-editor && npm install && npm run test",
