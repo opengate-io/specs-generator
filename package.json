@@ -30,7 +30,7 @@
         "js-yaml": "^3.2.6",
         "supertest": "^1.2.0",
         "swagger-parser": "^3.4.1",
-        "tape": "^4" git diff | grep "AWS_SECRET_ACCESS_KEY^aws_secret_access_key"
+        "tape": "^4"
     },
     "scripts": {
         "test": "npm run cover && cd specs-editor && npm install && npm run test",
