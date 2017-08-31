@@ -1,6 +1,6 @@
 node_modules
 coverage
-dist
+public/dist
 .idea
 .deps_check
 .DS_Store
