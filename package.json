@@ -33,6 +33,7 @@
         "swagger-parser": "^3.4.1",
         "tape": "^4"
     },
+    "bundledDependencies": ["express", "body-parser", "generate-schema", "parse-curl", "query-string", "request", "swagger2openapi", "swaggerize-express", "swagmock"],
     "scripts": {
         "test": "npm run cover && cd specs-editor && npm install && npm run test",
         "cover": "istanbul cover tape -- 'tests/**/*.js'",

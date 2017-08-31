@@ -9,3 +9,14 @@ cache:
   directories:
     - "node_modules"
 after_success: 'npm run coveralls'
+before_deploy:
+- "rm -rf specs-editor && npm pack"
+deploy:
+- provider: releases
+  api_key: $GITHUB_API_KEY
+  file:
+    - specs-generator-${TRAVIS_TAG}.tgz
+  skip_cleanup: true
+  on:
+    repo: opengate-io/specs-generator
+    tags: true
