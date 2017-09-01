@@ -23,8 +23,8 @@ docker run --name specs-generator -p 80:8000 opengate/specs-generator
 
 ## How to generate an API specification from CURL command
 
- 1. Using Google Chrome: More Tools/Developer Tool
- 2. Select a REST API you want to inspect on Network tab
- 3. Right click and choose Copy/Copy as cURL
- 4. Launch specs-generator web application
- 5. Paste into File/Import from CURL dialog
+ 1. Using Google Chrome: (More Tools/Developer Tools)
+ 2. Select a REST API you want to inspect on Network Tab
+ 3. Right click and choose (Copy/Copy as cURL)
+ 4. Launch specs-generator web application http://localhost:8000
+ 5. Paste into (File/Import from CURL) input dialog then Import
