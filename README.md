@@ -15,7 +15,7 @@ npm run build
 npm start
 ```
 
-## Start from docker image
+## Start running from Docker image
 
 ```
 docker run --name specs-generator -p 80:8000 opengate/specs-generator
